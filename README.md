@@ -11,7 +11,7 @@
 
 **👉 [https://tictactoe-ai-lake.vercel.app](https://tictactoe-ai-lake.vercel.app)**
 
-<!-- 스크린샷 -->
+![앱 스크린샷](docs/screenshot.png)
 
 ## ✨ 주요 기능
 
