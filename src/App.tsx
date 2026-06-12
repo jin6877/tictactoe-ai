@@ -10,13 +10,43 @@ import {
 
 const EMPTY_BOARD: Board = Array(9).fill(null)
 
+type Stats = { wins: number; losses: number; draws: number }
+
+const STATS_KEY = 'tictactoe-stats'
+
+function loadStats(): Stats {
+  try {
+    const saved = localStorage.getItem(STATS_KEY)
+    if (saved) return JSON.parse(saved)
+  } catch {
+    // ignore corrupted data
+  }
+  return { wins: 0, losses: 0, draws: 0 }
+}
+
 function App() {
   const [board, setBoard] = useState<Board>(EMPTY_BOARD)
   const [difficulty, setDifficulty] = useState<Difficulty>('hard')
   const [turn, setTurn] = useState<'player' | 'ai'>('player')
+  const [stats, setStats] = useState<Stats>(loadStats)
+  const [recorded, setRecorded] = useState(false)
 
   const winner = getWinner(board)
   const draw = isDraw(board)
+
+  useEffect(() => {
+    if (recorded || !isGameOver(board)) return
+
+    setStats((prev) => {
+      const next = { ...prev }
+      if (winner === 'X') next.wins++
+      else if (winner === 'O') next.losses++
+      else next.draws++
+      localStorage.setItem(STATS_KEY, JSON.stringify(next))
+      return next
+    })
+    setRecorded(true)
+  }, [board, winner, recorded])
 
   useEffect(() => {
     if (turn !== 'ai' || isGameOver(board)) return
@@ -43,6 +73,13 @@ function App() {
   function reset() {
     setBoard(EMPTY_BOARD)
     setTurn('player')
+    setRecorded(false)
+  }
+
+  function resetStats() {
+    const empty = { wins: 0, losses: 0, draws: 0 }
+    setStats(empty)
+    localStorage.setItem(STATS_KEY, JSON.stringify(empty))
   }
 
   let status: string
@@ -72,6 +109,18 @@ function App() {
             {level}
           </button>
         ))}
+      </div>
+
+      <div className="flex gap-4 text-sm">
+        <span className="text-emerald-400">Wins {stats.wins}</span>
+        <span className="text-rose-400">Losses {stats.losses}</span>
+        <span className="text-slate-400">Draws {stats.draws}</span>
+        <button
+          onClick={resetStats}
+          className="text-slate-500 hover:text-slate-300 underline transition-colors"
+        >
+          reset
+        </button>
       </div>
 
       <p className="text-lg h-7">{status}</p>
