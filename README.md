@@ -1,73 +1,46 @@
-# React + TypeScript + Vite
+# 🎮 Tic-Tac-Toe vs Minimax AI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+절대 지지 않는 AI와 틱택토 대결! Minimax 알고리즘으로 구현된 AI를 이겨보세요.
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🔗 라이브 데모
 
-## React Compiler
+**👉 [https://tictactoe-ai-lake.vercel.app](https://tictactoe-ai-lake.vercel.app)**
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+<!-- 스크린샷 -->
 
-## Expanding the ESLint configuration
+## ✨ 주요 기능
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- 🤖 **Minimax 알고리즘 AI** — 서버 없이 브라우저에서 실시간 계산
+- 🎚️ **난이도 3단계** — Easy / Medium / Hard (Hard는 절대 지지 않습니다)
+- 📊 **전적 기록** — 승/패/무 횟수를 localStorage에 저장, 브라우저를 닫아도 유지
+- 🌙 **다크 테마 UI** — Tailwind CSS 기반의 깔끔한 인터페이스
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🛠️ 기술 스택
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- React 19 + TypeScript
+- Vite
+- Tailwind CSS v4
+- 순수 클라이언트 사이드 (백엔드 없음)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🚀 로컬 실행
+
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🧠 AI 동작 원리
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Minimax 알고리즘은 가능한 모든 수를 끝까지 시뮬레이션해서 최선의 수를 선택합니다.
+난이도는 랜덤 수를 섞는 비율로 조절됩니다:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+| 난이도 | 랜덤 수 비율 |
+|--------|-------------|
+| Easy   | 80%         |
+| Medium | 40%         |
+| Hard   | 0% (완벽)   |
